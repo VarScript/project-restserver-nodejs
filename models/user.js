@@ -1,21 +1,21 @@
 // For record my user in database
 
-const { Schema, model } = require('mogoose');
+const { Schema, model } = require('mongoose');
 
 
 const UserSchema = Schema({
     name: {
         type: String,
-        require: [treu, 'The name is required']
+        require: [true, 'The name is required']
     },
     email: {
         type: String,
-        require: [treu, 'The email is required'],
+        require: [true, 'The email is required'],
         unique: true // for dot'n repeat emails
     },
     password: {
         type: String,
-        require: [treu, 'The password is required']
+        require: [true, 'The password is required']
     },
     img: {
         type: String,

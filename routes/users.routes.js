@@ -1,5 +1,7 @@
 // Destructuring something that go in of the package of express
 const { Router } = require('express');
+const { check } = require('express-validator')
+
 const { userGet,
         userPut,
         userPost,
@@ -14,7 +16,9 @@ router.get('/', userGet );
 
 router.put('/:id', userPut );
 
-router.post('/', userPost );
+router.post('/', [
+    check('email', 'The email is not validate').isEmail(),
+], userPost );
 
 router.patch('/', userPatch );
 
