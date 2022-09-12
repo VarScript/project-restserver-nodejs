@@ -1,7 +1,7 @@
 const { response, request } = require('express');
 const User = require('../models/user');
 const bcryptjs = require('bcryptjs'); 
-const { validationResult } = require('express-validator');
+
 
 
 const userGet = (req = request, res = response) => { 
@@ -33,11 +33,7 @@ const userPut = (req = request, res = response) => {
 
 
 const userPost = async (req = request, res = response) => { // create new resources
-    
-    const errors = validationResult(req);
-    if ( !errors.isEmpty() ) {
-        return res.status(400).json(errors)
-    }
+
     
     // Recive the body in formart json of server
     const { name, email, password, rol } = req.body;

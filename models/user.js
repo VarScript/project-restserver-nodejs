@@ -23,7 +23,7 @@ const UserSchema = Schema({
     rol: {
         type: String,
         require: true,
-        emun: ['ADMIN_ROL', 'USER_ROL'] // VALIDATE any of the two roles
+        emun: ['ADMIN_ROLE', 'USER_ROLE'] // VALIDATE any of the two roles
     },
     status: {
         type: Boolean,
