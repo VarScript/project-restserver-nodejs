@@ -39,14 +39,6 @@ const userPost = async (req = request, res = response) => { // create new resour
     const { name, email, password, rol } = req.body;
     const user = new User( { name, email, password, rol } ); 
 
-    // verify if email exits
-    const emailExist = await User.findOne({ email });
-    if ( emailExist ) {
-        return res.status(404).json({
-            msg: 'The email it is already register'
-        });
-    }
-
     // encrip password
     const salt = bcryptjs.genSaltSync();
     user.password = bcryptjs.hashSync( password, salt)
