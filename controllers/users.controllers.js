@@ -20,21 +20,30 @@ const userGet = (req = request, res = response) => {
 }
 
 
-const userPut = (req = request, res = response) => {
+
+const userPut = async (req = request, res = response) => {
     // For recive the id in the URL
     const { id } = req.params;
+    const { password, google, email, ...rest } = req.body;
     
+    // ALL validate against database
+    if ( password ) {
+        // encrip password
+        const salt = bcryptjs.genSaltSync();
+        rest.password = bcryptjs.hashSync( password, salt)
+    }
+
+    const userDB = await User.findByIdAndUpdate( id, rest);
     // when is a json format it send an object
     res.json({ 
         msg: 'put API - controller',
-        id
+        userDB
     });
 }
 
 
-const userPost = async (req = request, res = response) => { // create new resources
 
-    
+const userPost = async (req = request, res = response) => { // create new resources
     // Recive the body in formart json of server
     const { name, email, password, rol } = req.body;
     const user = new User( { name, email, password, rol } ); 
@@ -45,12 +54,12 @@ const userPost = async (req = request, res = response) => { // create new resour
 
     // save in db
     await user.save();
-
     // when is a json format it send an object
     res.json({ 
         user
     });
 }
+
 
 
 const userPatch = (req = request, res = response) => {
@@ -59,6 +68,8 @@ const userPatch = (req = request, res = response) => {
         msg: 'patch API - controller'
     });
 }
+
+
 
 const userDelete = (req = request, res = response) => {
     // when is a json format it send an object
