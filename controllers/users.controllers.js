@@ -24,7 +24,7 @@ const userGet = (req = request, res = response) => {
 const userPut = async (req = request, res = response) => {
     // For recive the id in the URL
     const { id } = req.params;
-    const { password, google, email, ...rest } = req.body;
+    const { _id, password, google, email, ...rest } = req.body;
     
     // ALL validate against database
     if ( password ) {
@@ -33,11 +33,11 @@ const userPut = async (req = request, res = response) => {
         rest.password = bcryptjs.hashSync( password, salt)
     }
 
-    const userDB = await User.findByIdAndUpdate( id, rest);
+    const user = await User.findByIdAndUpdate( id, rest, {new: true} );
     // when is a json format it send an object
     res.json({ 
         msg: 'put API - controller',
-        userDB
+        user
     });
 }
 

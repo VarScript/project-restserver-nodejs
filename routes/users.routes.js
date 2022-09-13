@@ -3,7 +3,7 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 
 const { validateFields } = require('../middlewares/validate-fields')
-const { isRolValidate, ifEmailExist } = require('../helpers/db-validators');
+const { isRolValidate, ifEmailExist, existUserForId } = require('../helpers/db-validators');
 
 const { userGet,
         userPut,
@@ -17,7 +17,18 @@ const router = Router();
 // here it call the reference of the same 
 router.get('/', userGet );
 
-router.put('/:id', userPut );
+
+
+
+router.put('/:id', [
+    check('id', 'Not is an ID validate').isMongoId(),
+    check('id').custom( existUserForId ),
+    check('rol').custom( isRolValidate ),
+    validateFields
+],userPut );
+
+
+
 
 router.post('/', [
     check('name', 'The name is require').not().isEmpty(),
@@ -28,9 +39,16 @@ router.post('/', [
     validateFields  
 ], userPost );
 
+
+
+
 router.patch('/', userPatch );
 
+
+
+
 router.delete('/', userDelete );
+
 
 
 module.exports = router;

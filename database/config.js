@@ -6,7 +6,7 @@ const dbConnection = async() => {
         // await: for to wait that the connection it's make
         await mongoose.connect( process.env.MONGODB_CNN, {
             useNewUrlParser: true,
-            useUnifiedTopology: true
+            useUnifiedTopology: true,
         });
 
         console.log('Database online');
