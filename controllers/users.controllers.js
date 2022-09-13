@@ -4,18 +4,17 @@ const bcryptjs = require('bcryptjs');
 
 
 
-const userGet = (req = request, res = response) => { 
+const userGet = async (req = request, res = response) => { 
+    // reference: const { q, name = 'No mane', apikey, page = 2, limit } = req.query;
 
-    const { q, name = 'No mane', apikey, page = 2, limit } = req.query;
+    const { limit = 5, since = 0} = req.query;
+    const users = await User.find()
+    .skip(Number( since ))    
+    .limit(Number( limit ));
 
     // when is a json format it send an object
     res.json({ 
-        msg: 'get API - controller',
-        q,
-        name,
-        apikey,
-        page,
-        limit
+        users
     });
 }
 
@@ -35,10 +34,7 @@ const userPut = async (req = request, res = response) => {
 
     const user = await User.findByIdAndUpdate( id, rest, {new: true} );
     // when is a json format it send an object
-    res.json({ 
-        msg: 'put API - controller',
-        user
-    });
+    res.json(user);
 }
 
 
