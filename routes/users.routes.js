@@ -42,12 +42,20 @@ router.post('/', [
 
 
 
+router.delete('/:id',[
+    check('id', 'Not is an ID validate').isMongoId(),
+    check('id').custom( existUserForId ),
+    validateFields
+] , userDelete );
+
+
+
+
 router.patch('/', userPatch );
 
 
 
 
-router.delete('/', userDelete );
 
 
 

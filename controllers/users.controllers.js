@@ -73,11 +73,17 @@ const userPatch = (req = request, res = response) => {
 
 
 
-const userDelete = (req = request, res = response) => {
+const userDelete = async (req = request, res = response) => {
+    
+    const { id } = req.params;
+
+    // Delete - be not recommend use
+    //const user = await User.findByIdAndDelete( id )
+
+    const user = await User.findByIdAndUpdate(id, { status: false })
+    
     // when is a json format it send an object
-    res.json({ 
-        msg: 'delete API - controller'
-    });
+    res.json(user);
 }
 
 
