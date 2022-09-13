@@ -1,4 +1,4 @@
-const { response, request } = require('express');
+const { response, request, query } = require('express');
 const User = require('../models/user');
 const bcryptjs = require('bcryptjs'); 
 
@@ -8,12 +8,18 @@ const userGet = async (req = request, res = response) => {
     // reference: const { q, name = 'No mane', apikey, page = 2, limit } = req.query;
 
     const { limit = 5, since = 0} = req.query;
-    const users = await User.find()
-    .skip(Number( since ))    
-    .limit(Number( limit ));
+    const query = { status: true};
+
+    const [ total, users ] = await Promise.all([
+        User.countDocuments(query),
+        User.find(query)
+            .skip(Number( since ))    
+            .limit(Number( limit ))
+    ])
 
     // when is a json format it send an object
     res.json({ 
+        total, 
         users
     });
 }
