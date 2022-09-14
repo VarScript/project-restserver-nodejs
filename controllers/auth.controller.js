@@ -63,9 +63,40 @@ const googleSingIn = async (req, res = response ) => {
     try {
         
         const { name, picture, email } = await googleVerify( id_token );
-        console.log( name, picture, email)
+        
+        let user = await User.findOne({ email });
+        
+        if ( !user ) {
+            const data = {
+                name,
+                email,
+                password: ':P',
+                picture,
+                google: true
+            };
+
+            user = new User( data );
+            await user.save();
+        }
+
+        // If the User  in BD 
+        if ( !user.status ) {
+            return res.status(401).json({
+                mgs: 'Talk with the Administrator, user blocked'
+            });
+        }
+
+        // Generate the JWT
+        const token = await generateJWT( user.id );
+
+        res.json({
+            user,
+            token
+        });
+
+
     } catch (error) {
-        json.status(400).json({
+        res.status(400).json({
             ok: false,
             msg: 'The Token was could not verify'
         });
