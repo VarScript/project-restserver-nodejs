@@ -1,6 +1,10 @@
 const { isValidObjectId } = require('mongoose');
+
 const Role = require('../models/role');
+
 const User = require('../models/user'); 
+
+
 
 const isRolValidate =  async (rol = '') => {
     const existRole = await Role.findOne({ rol });

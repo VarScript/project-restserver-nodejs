@@ -1,5 +1,7 @@
 const { response } = require("express")
 
+
+
 const isAdminRole = ( req, res =response, next) => {
 
     if ( !req.user ) {
@@ -19,9 +21,11 @@ const isAdminRole = ( req, res =response, next) => {
     next();
 }
 
+
+
 const haveRole = ( ...roles ) => {
     return ( req, res =response, next) => {
-        
+
         if ( !req.user ) {
             return res.status(500).json({
                 msg: 'It want verify the role without validate token first'
@@ -37,6 +41,8 @@ const haveRole = ( ...roles ) => {
         next();
     }
 }
+
+
 
 module.exports = {
     isAdminRole,

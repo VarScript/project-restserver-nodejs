@@ -2,24 +2,34 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const { validateFields } = require('../middlewares/validate-fields')
-const { validateJWT } = require('../middlewares/validate-jwt');
-const { isAdminRole, haveRole } = require('../middlewares/validate-roles');
 
-const { isRolValidate, ifEmailExist, existUserForId } = require('../helpers/db-validators');
+const {
+    validateFields,
+    validateJWT,
+    isAdminRole,
+    haveRole
+} = require('../middlewares')
+
+
+const { isRolValidate,
+        ifEmailExist,
+        existUserForId 
+} = require('../helpers/db-validators');
+
 
 const { userGet,
         userPut,
         userPost,
         userPatch,
-        userDelete } = require('../controllers/users.controllers');
+        userDelete 
+} = require('../controllers/users.controllers');
 
 const router = Router();
 
 
+
 // here it call the reference of the same 
 router.get('/', userGet );
-
 
 
 
@@ -29,7 +39,6 @@ router.put('/:id', [
     check('rol').custom( isRolValidate ),
     validateFields
 ],userPut );
-
 
 
 
@@ -44,7 +53,6 @@ router.post('/', [
 
 
 
-
 router.delete('/:id',[
     validateJWT,
     //isAdminRole,
@@ -56,12 +64,7 @@ router.delete('/:id',[
 
 
 
-
 router.patch('/', userPatch );
-
-
-
-
 
 
 

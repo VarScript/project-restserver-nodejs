@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 
+
 const dbConnection = async() => {
     try {
         // await: for to wait that the connection it's make
@@ -16,6 +17,7 @@ const dbConnection = async() => {
         throw new Error('Error in the dabtabase')
     }
 }
+
 
 
 module.exports = {

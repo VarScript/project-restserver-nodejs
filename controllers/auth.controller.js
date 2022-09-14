@@ -1,12 +1,15 @@
 const { response } = require("express");
 const bcryptjs = require('bcryptjs')
 
+
 const User = require('../models/user');
+
 
 const { generateJWT } = require("../helpers/generate-jwt");
 
-const login = async (req, res = response) => {
 
+
+const login = async (req, res = response) => {
     const { email, password } = req.body;
 
     try {
@@ -48,8 +51,8 @@ const login = async (req, res = response) => {
             msg: 'something went wrong'
         });
     }
-
 }
+
 
 
 module.exports = {

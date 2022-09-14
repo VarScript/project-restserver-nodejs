@@ -1,11 +1,14 @@
-const express = require('express')
+const express = require('express');
+
 const cors = require('cors');
+
 const { dbConnection } = require('../database/config');
 
-class Server {
 
+
+class Server {
     constructor() {
-        this.app = express(); // 
+        this.app = express(); 
         this.port = process.env.PORT;
 
         this.userPath = '/api/users';
@@ -25,14 +28,12 @@ class Server {
         await dbConnection();
     }
 
-
     middleware() {
         // CORS
-        this.app.use(cors())
+        this.app.use(cors());
 
         // Reading and parsing of body - for show in user.controller
         this.app.use( express.json() );
-
 
         // Public directory
         this.app.use( express.static('public')); // use: is the clave word
@@ -51,7 +52,8 @@ class Server {
             console.log('Server runing in the port: ', this.port);
         });
     }
-
 }
+
+
 
 module.exports = Server;

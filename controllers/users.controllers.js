@@ -1,5 +1,7 @@
 const { response, request, query } = require('express');
+
 const User = require('../models/user');
+
 const bcryptjs = require('bcryptjs'); 
 
 
@@ -76,7 +78,6 @@ const userPatch = (req = request, res = response) => {
 const userDelete = async (req = request, res = response) => {
     
     const { id } = req.params;
-
 
     const user = await User.findByIdAndUpdate(id, { status: false })
 
