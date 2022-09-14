@@ -72,6 +72,7 @@ const googleSingIn = async (req, res = response ) => {
                 email,
                 password: ':P',
                 picture,
+                rol: "USER_ROLE",
                 google: true
             };
 
