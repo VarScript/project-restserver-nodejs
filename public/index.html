@@ -44,7 +44,7 @@
             //console.log('id_token', response.credential);
             const body = { id_token: response.credential };
 
-            fetch( 'https://restserver-nodejs-varscrip.herokuapp.com' , {
+            fetch('http://restserver-nodejs-varscrip/api/auth/google' , {
                 method: 'POST',
                 headers: {
                     'Content-Type':'application/json'
