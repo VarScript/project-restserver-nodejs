@@ -11,8 +11,12 @@ class Server {
         this.app = express(); 
         this.port = process.env.PORT;
 
-        this.userPath = '/api/users';
-        this.authPath = '/api/auth';
+        this.paths = {
+            auth: '/api/auth',
+            categories: '/api/categories',
+            users: '/api/user',
+        };
+        
 
         // Connect databade
         this.connectDB();
@@ -43,8 +47,10 @@ class Server {
     // Routes that i wanna
     routes() {
         
-        this.app.use(this.authPath, require('../routes/auth'));
-        this.app.use(this.userPath, require('../routes/users.routes'));
+        this.app.use(this.paths.auth, require('../routes/auth'));
+        this.app.use(this.paths.categories, require('../routes/categories'));
+        this.app.use(this.paths.users, require('../routes/users.routes'));
+
     }
 
     listen() {
