@@ -17,7 +17,7 @@ const userGet = async (req = request, res = response) => {
         User.find(query)
             .skip(Number( since ))    
             .limit(Number( limit ))
-    ])
+    ]);
 
     // when is a json format it send an object
     res.json({ 

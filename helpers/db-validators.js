@@ -1,8 +1,10 @@
 const { isValidObjectId } = require('mongoose');
 
-const Role = require('../models/role');
-
-const User = require('../models/user'); 
+const {
+    User,
+    Category,
+    Role
+} = require('../models'); 
 
 
 
@@ -24,10 +26,20 @@ const ifEmailExist = async (email = '') => {
 
 
 
-const existUserForId = async (id = '') => {
+const existUserById = async ( id = '' ) => {
     // User validation
     const existUser = await User.findById(id);
     if ( !existUser ) {
+        throw new Error(`The ID: ${ id }, is not exist`);
+    }
+}
+
+
+const existCategoryById = async ( id = '' ) => {
+    // Category validator
+    const existCategory = await Category.findById(id);
+
+    if ( !existCategory ) {
         throw new Error(`The ID: ${ id }, is not exist`);
     }
 }
@@ -37,5 +49,6 @@ const existUserForId = async (id = '') => {
 module.exports = {
     isRolValidate,
     ifEmailExist,
-    existUserForId
+    existUserById,
+    existCategoryById
 }

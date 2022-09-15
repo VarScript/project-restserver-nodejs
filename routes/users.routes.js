@@ -13,7 +13,7 @@ const {
 
 const { isRolValidate,
         ifEmailExist,
-        existUserForId 
+        existUserById 
 } = require('../helpers/db-validators');
 
 
@@ -35,7 +35,7 @@ router.get('/', userGet );
 
 router.put('/:id', [
     check('id', 'Not is an ID validate').isMongoId(),
-    check('id').custom( existUserForId ),
+    check('id').custom( existUserById ),
     check('rol').custom( isRolValidate ),
     validateFields
 ],userPut );
@@ -58,7 +58,7 @@ router.delete('/:id',[
     //isAdminRole,
     haveRole('ADMIN_ROLE', 'SALES_ROLE', 'USER_ROLE'),
     check('id', 'Not is an ID validate').isMongoId(),
-    check('id').custom( existUserForId ),
+    check('id').custom( existUserById ),
     validateFields
 ] , userDelete );
 
