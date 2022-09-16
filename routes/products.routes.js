@@ -8,6 +8,7 @@ const {
 } = require('../middlewares');
 
 const{
+    productsGet,
     createProduct,
 
 } = require('../controllers/products.controller');
@@ -22,15 +23,13 @@ const router = Router();
 
 
 // GET all products
-router.get('/', (req,res) => {
-    res.json('GET products')
-});
+router.get('/', productsGet);
 
 
 
 // GET all products by ID
 router.get('/:id', (req,res) => {
-    res.json('GET products - ID')
+    res.json('UPDATE products - ID - TOKEN')
 });
 
 

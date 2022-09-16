@@ -1,11 +1,28 @@
 const { response } = require('express');
 
-const { Product, Category } = require('../models');
+const { Product } = require('../models');
 
 
 
 // GET all products
+const productsGet = async (req, res = response) => {
 
+    const { limit = 5, since = 0 } = req.query;
+    const query = { status: true };
+
+    const [ total, products ] = await Promise.all([
+        Product.countDocuments(query),
+        Product.find(query)
+            .populate('user', 'name')
+            .skip(Number( since ))
+            .limit(Number( limit ))
+    ]);
+
+    res.json({
+        total,
+        products
+    });
+} 
 
 
 
@@ -18,9 +35,10 @@ const { Product, Category } = require('../models');
 const createProduct = async (req, res = response) => {
     
     const { status, user, ...body } = req.body;
+    const name = body.name ;
     
     // IF the category is active
-    const productDb = await Product.findOne({ body: body.name });
+    const productDb = await Product.findOne({ name });
 
     if ( productDb ) {
         return res.status(401).json({
@@ -51,7 +69,7 @@ const createProduct = async (req, res = response) => {
 
 
 
-// Delete a category - Only Admin
+// Delete a product - Only Admin
 
 
 
@@ -60,5 +78,6 @@ const createProduct = async (req, res = response) => {
 // - 
 
 module.exports = {
+    productsGet,    
     createProduct,
 }
