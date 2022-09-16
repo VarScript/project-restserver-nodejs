@@ -14,7 +14,7 @@ const{
 
 } = require('../controllers/products.controller');
 
-const { existCategoryById } = require('../helpers/db-validators');
+const { existProductById, existCategoryById } = require('../helpers/db-validators');
 
 
 
@@ -29,7 +29,11 @@ router.get('/', productsGet);
 
 
 // GET all products by ID
-router.get('/:id', [], productsGetId);
+router.get('/:id', [
+    check('id', 'Not is an ID validate').isMongoId(),
+    check('id').custom( existProductById ),
+    validateFields
+], productsGetId);
 
 
 

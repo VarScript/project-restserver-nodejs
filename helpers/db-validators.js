@@ -3,7 +3,8 @@ const { isValidObjectId } = require('mongoose');
 const {
     User,
     Category,
-    Role
+    Role,
+    Product
 } = require('../models'); 
 
 
@@ -45,10 +46,21 @@ const existCategoryById = async ( id = '' ) => {
 }
 
 
+const existProductById = async ( id = '' ) => {
+    // Product validator
+    const existProduct = await Product.findById(id);
+
+    if ( !existProduct ) {
+        throw new Error(`The ID: ${ id }, is not exist`);
+    }
+}
+
+
 
 module.exports = {
     isRolValidate,
     ifEmailExist,
     existUserById,
-    existCategoryById
+    existCategoryById,
+    existProductById
 }
