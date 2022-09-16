@@ -14,6 +14,7 @@ class Server {
         this.paths = {
             auth: '/api/auth',
             categories: '/api/categories',
+            products: '/api/products',
             users: '/api/user',
         };
         
@@ -49,6 +50,7 @@ class Server {
         
         this.app.use(this.paths.auth, require('../routes/auth.routes'));
         this.app.use(this.paths.categories, require('../routes/categories.routes'));
+        this.app.use(this.paths.products, require('../routes/products.routes'));
         this.app.use(this.paths.users, require('../routes/users.routes'));
 
     }
