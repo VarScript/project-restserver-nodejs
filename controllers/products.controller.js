@@ -22,17 +22,20 @@ const productsGet = async (req, res = response) => {
         total,
         products
     });
+
 } 
 
 
 
 // GET all products by ID
-const productsGetId = async(req, res = response) => {
+const productsGetId = async (req, res = response) => {
+    
     const { id }= req.params;
 
     const product = await Product.findById(id).populate('user', 'name');
 
-    res.json(product)
+    res.json(product);
+
 }
 
 
@@ -66,6 +69,7 @@ const createProduct = async (req, res = response) => {
     await product.save();
 
     res.status(201).json( product );
+
 }
 
 
@@ -93,12 +97,21 @@ const updateProduct = async (req, res = response) => {
     const product = await Product.findByIdAndUpdate(id, rest, { new: true });
 
     res.json(product);
+
 }
 
 
 
 // Delete a product - Only Admin
+const deleteProduct = async (req, res = response) => {
+    
+    const { id } = req.params;
 
+    const product = await Product.findByIdAndUpdate(id, { status: false });
+
+    res.json(product);
+
+}
 
 
 
@@ -110,4 +123,5 @@ module.exports = {
     productsGetId,
     createProduct,
     updateProduct,
+    deleteProduct
 }

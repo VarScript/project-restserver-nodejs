@@ -12,7 +12,7 @@ const{
     productsGetId,
     createProduct,
     updateProduct,
-
+    deleteProduct,
 } = require('../controllers/products.controller');
 
 const { existProductById, existCategoryById } = require('../helpers/db-validators');
@@ -61,9 +61,13 @@ router.put('/:id', [
 
 
 // Delete a category - Only Admin
-router.delete('/:id', (req,res) => {
-    res.json('DELETE product - ADMIN')
-});
+router.delete('/:id', [
+    validateJWT,
+    isAdminRole,
+    check('id', 'Not is an ID validate').isMongoId(),
+    check('id').custom( existProductById ),
+    validateFields,
+], deleteProduct);
 
 
 module.exports = router;
