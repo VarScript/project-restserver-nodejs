@@ -32,8 +32,8 @@ const ProductSchema = Schema ({
 });
 
 ProductSchema.methods.toJSON = function() {
-    const { __v, status, ...category } = this.toObject();
-    return category;
+    const { __v, status, ...product } = this.toObject();
+    return product;
 }
 
 module.exports = model( 'Product', ProductSchema );
