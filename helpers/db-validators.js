@@ -55,6 +55,17 @@ const existProductById = async ( id = '' ) => {
     }
 }
 
+// validate permitted collection
+const permittedCollection = ( collection = '', collections = [] ) => {
+
+    const include = collections.includes( collection );
+    if ( !include ) {
+        throw new Error(`The collection ${ collection } is not permitted - Permitted collection ${ collections }`)
+    }
+
+    return true;
+}
+
 
 
 module.exports = {
@@ -62,5 +73,6 @@ module.exports = {
     ifEmailExist,
     existUserById,
     existCategoryById,
-    existProductById
+    existProductById,
+    permittedCollection
 }

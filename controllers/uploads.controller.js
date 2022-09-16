@@ -20,10 +20,19 @@ const uploadFiles = async (req, res =  response) => {
         res.status(400).json({ msg })
     }
     
+}
 
+
+
+const updateImage = (req, res = response ) => {
+    
+    const { id, collection } = req.params;
+    
+    res.json({ id, collection })
 }
 
 
 module.exports = {
-    uploadFiles
+    uploadFiles,
+    updateImage
 }
