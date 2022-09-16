@@ -1,5 +1,7 @@
 const path = require('path');
 
+const { v4: uuidv4 } = require('uuid');
+
 const { response } = require("express");
 
 
@@ -16,24 +18,25 @@ const uploadFiles = (req, res =  response) => {
     const extension = cutName[ cutName.length - 1 ]
 
     // Validate the extension
-    const validExtension = [ 'jp', 'png', 'gif'];
+    const validExtension = [ 'jpg', 'png', 'gif'];
     if ( !validExtension.includes( extension ) ) {
         return res.status(400).json({
             msg: `The extension ${ extension } is not permitted - valid extensions: ${ validExtension }`
         })
     } 
 
-    res.json({ extension });
-    
-    // const uploadPath = path.join(__dirname, '../uploads/', file.name);
+    // Temporal name
+    const tempName = uuidv4() + '.' + extension;
 
-    // file.mv(uploadPath, (err) => { 
-    // if (err) {
-    //     return res.status(500).json({ err });
-    // }
+    const uploadPath = path.join(__dirname, '../uploads/', tempName);
 
-    // res.json({msg: 'File uploaded to ' + uploadPath});
-    // });
+    file.mv(uploadPath, (err) => { 
+    if (err) {
+        return res.status(500).json({ err });
+    }
+
+    res.json({msg: 'File uploaded to ' + uploadPath});
+    });
 
 }
 
