@@ -9,6 +9,7 @@ const {
 
 const{
     productsGet,
+    productsGetId,
     createProduct,
 
 } = require('../controllers/products.controller');
@@ -28,9 +29,7 @@ router.get('/', productsGet);
 
 
 // GET all products by ID
-router.get('/:id', (req,res) => {
-    res.json('UPDATE products - ID - TOKEN')
-});
+router.get('/:id', [], productsGetId);
 
 
 

@@ -27,7 +27,13 @@ const productsGet = async (req, res = response) => {
 
 
 // GET all products by ID
+const productsGetId = async(req, res = response) => {
+    const { id }= req.params;
 
+    const product = await Product.findById(id).populate('user', 'name');
+
+    res.json(product)
+}
 
 
 
@@ -36,7 +42,7 @@ const createProduct = async (req, res = response) => {
     
     const { status, user, ...body } = req.body;
     const name = body.name ;
-    
+
     // IF the category is active
     const productDb = await Product.findOne({ name });
 
@@ -78,6 +84,7 @@ const createProduct = async (req, res = response) => {
 // - 
 
 module.exports = {
-    productsGet,    
+    productsGet,
+    productsGetId,
     createProduct,
 }
