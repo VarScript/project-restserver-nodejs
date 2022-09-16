@@ -2,6 +2,8 @@ const express = require('express');
 
 const cors = require('cors');
 
+const fileUpload = require('express-fileupload');
+
 const { dbConnection } = require('../database/config');
 
 
@@ -45,6 +47,11 @@ class Server {
         // Public directory
         this.app.use( express.static('public')); // use: is the clave word
 
+        // File upload
+        this.app.use(fileUpload({
+            useTempFiles : true,
+            tempFileDir : '/tmp/'
+        }));
     }
 
     // Routes that i wanna
