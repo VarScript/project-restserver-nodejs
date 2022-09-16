@@ -41,9 +41,9 @@ const productsGetId = async(req, res = response) => {
 const createProduct = async (req, res = response) => {
     
     const { status, user, ...body } = req.body;
-    const name = body.name ;
-
     // IF the category is active
+    const name = body.name.toUpperCase();
+    
     const productDb = await Product.findOne({ name });
 
     if ( productDb ) {
@@ -71,7 +71,29 @@ const createProduct = async (req, res = response) => {
 
 
 // Update - Any person with a token valid
+const updateProduct = async (req, res = response) => {
 
+    // IF the category is active
+    const name = req.body.name.toUpperCase();
+    
+    const productDb = await Product.findOne({ name });
+
+    if ( productDb ) {
+        return res.status(401).json({
+            msg: `The Product ${ productDb.name }, already exist`
+        });
+    }
+
+    const { id } = req.params;
+    const { _id, user, ...rest } = req.body;
+
+    rest.name = rest.name.toUpperCase();
+    rest.user = req.user.id;
+
+    const product = await Product.findByIdAndUpdate(id, rest, { new: true });
+
+    res.json(product);
+}
 
 
 
@@ -87,4 +109,5 @@ module.exports = {
     productsGet,
     productsGetId,
     createProduct,
+    updateProduct,
 }

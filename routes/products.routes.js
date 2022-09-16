@@ -11,6 +11,7 @@ const{
     productsGet,
     productsGetId,
     createProduct,
+    updateProduct,
 
 } = require('../controllers/products.controller');
 
@@ -49,9 +50,13 @@ router.post('/', [
 
 
 // Update - Any person with a token valid
-router.put('/:id', (req,res) => {
-    res.json('UPDATE products - ID - TOKEN')
-});
+router.put('/:id', [
+    validateJWT,
+    check('name', 'The name is require').not().isEmpty(),
+    check('id', 'Not is an ID validate').isMongoId(),
+    check('id').custom( existProductById ),
+    validateFields,
+], updateProduct);
 
 
 
