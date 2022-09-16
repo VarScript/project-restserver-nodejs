@@ -2,14 +2,11 @@ const { response } = require("express");
 
 const { uploadFile } = require("../helpers");
 
+const { User, Product } = require('../models')
+
 
 
 const uploadFiles = async (req, res =  response) => {
-
-    if (!req.files || Object.keys(req.files).length === 0 || !req.files.file) {
-    res.status(400).json({msg: 'There is not files that to upload'});
-    return;
-    }
 
     try {
         
@@ -24,11 +21,44 @@ const uploadFiles = async (req, res =  response) => {
 
 
 
-const updateImage = (req, res = response ) => {
-    
+const updateImage = async (req, res = response ) => {
+        
     const { id, collection } = req.params;
     
-    res.json({ id, collection })
+    let model;
+
+    switch (collection) {
+        case 'users':
+            model = await User.findById(id)
+            if ( !model ) {
+                return res.status(400).json({
+                    msg: `Not exist an user with id ${ id }`
+                }); 
+            }
+        break;
+
+        case 'products':
+            model = await Product.findById(id)
+            if ( !model ) {
+                return res.status(400).json({
+                    msg: `Not exist a product with id ${ id }`
+                }); 
+            }
+        break;
+    
+        default:
+            return res.status(500).json({msg: 'I forget valiated this'});
+    }
+    
+    const name = await uploadFile( req.files, undefined, collection );
+    
+    model.img = name;
+
+    await model.save();
+
+
+
+    res.json( model )
 }
 
 

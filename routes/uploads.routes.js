@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const { validateFields } = require('../middlewares');
+const { validateFields, validateFileUpload } = require('../middlewares');
 const { uploadFiles, updateImage } = require('../controllers/uploads.controller');
 const { permittedCollection } = require('../helpers');
 
@@ -10,11 +10,12 @@ const { permittedCollection } = require('../helpers');
 const router = Router();
 
 
-router.post('/', uploadFiles);
+router.post('/', validateFileUpload, uploadFiles);
 
 
 
 router.put('/:collection/:id', [
+    validateFileUpload,
     check('id', 'The Id have that be of Mongo').isMongoId(),
     check('collection').custom( c => permittedCollection( c, ['users', 'products'])),
     validateFields
