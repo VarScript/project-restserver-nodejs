@@ -13,9 +13,10 @@ const productsGet = async (req, res = response) => {
     const [ total, products ] = await Promise.all([
         Product.countDocuments(query),
         Product.find(query)
-            .populate('user', 'name')
-            .skip(Number( since ))
-            .limit(Number( limit ))
+        .skip(Number( since ))
+        .limit(Number( limit ))
+        .populate('user', 'name')
+        .populate('category', 'name')
     ]);
 
     res.json({
@@ -32,7 +33,9 @@ const productsGetId = async (req, res = response) => {
     
     const { id }= req.params;
 
-    const product = await Product.findById(id).populate('user', 'name');
+    const product = await Product.findById(id)
+                                    .populate('user', 'name')
+                                    .populate('category', 'name');
 
     res.json(product);
 
@@ -107,7 +110,7 @@ const deleteProduct = async (req, res = response) => {
     
     const { id } = req.params;
 
-    const product = await Product.findByIdAndUpdate(id, { status: false });
+    const product = await Product.findByIdAndUpdate(id, { status: false }, { new: true });
 
     res.json(product);
 
