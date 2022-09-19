@@ -1,8 +1,6 @@
 # Img Uploads
 
-*.jpg
-*.png
-*.gif
+uploads/
 
 # Logs
 logs
