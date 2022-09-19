@@ -1,5 +1,7 @@
-const { response } = require("express");
+const path = require('path');
+const fs   = require('fs')
 
+const { response } = require("express");
 const { uploadFile } = require("../helpers");
 
 const { User, Product } = require('../models')
@@ -49,6 +51,16 @@ const updateImage = async (req, res = response ) => {
         default:
             return res.status(500).json({msg: 'I forget valiated this'});
     }
+
+    // Clean previous images
+    if ( model.img ) {
+        // Delete the image of the server
+        const pathImg = path.join( __dirname, '../uploads', collection, model.img );
+        if ( fs.existsSync( pathImg ) ) {
+            fs.unlinkSync( pathImg );
+        }
+    }
+
     
     const name = await uploadFile( req.files, undefined, collection );
     
