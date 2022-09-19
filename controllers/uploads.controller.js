@@ -24,7 +24,7 @@ const uploadFiles = async (req, res =  response) => {
 
 
 const updateImage = async (req, res = response ) => {
-        
+
     const { id, collection } = req.params;
     
     let model;
@@ -47,7 +47,7 @@ const updateImage = async (req, res = response ) => {
                 }); 
             }
         break;
-    
+
         default:
             return res.status(500).json({msg: 'I forget valiated this'});
     }
@@ -60,7 +60,6 @@ const updateImage = async (req, res = response ) => {
             fs.unlinkSync( pathImg );
         }
     }
-
     
     const name = await uploadFile( req.files, undefined, collection );
     
@@ -68,13 +67,58 @@ const updateImage = async (req, res = response ) => {
 
     await model.save();
 
-
-
     res.json( model )
 }
 
 
+
+const showImg = async (req, res = response) => {
+
+    const { id, collection } = req.params;
+
+    let model;
+
+    switch (collection) {
+        case 'users':
+            model = await User.findById(id)
+            if ( !model ) {
+                return res.status(400).json({
+                    msg: `Not exist an user with id ${ id }`
+                }); 
+            }
+        break;
+
+        case 'products':
+            model = await Product.findById(id)
+            if ( !model ) {
+                return res.status(400).json({
+                    msg: `Not exist a product with id ${ id }`
+                }); 
+            }
+        break;
+
+        default:
+            return res.status(500).json({msg: 'I forget valiated this'});
+    }
+
+    // Clean previous images
+    if ( model.img ) {
+        // Delete the image of the server
+        const pathImg = path.join( __dirname, '../uploads', collection, model.img );
+        if ( fs.existsSync( pathImg ) ) {
+            return res.sendFile( pathImg);
+        }
+    }
+
+    res.json({ msg: 'Lack place holder' })
+
+}
+
+
+
+
 module.exports = {
     uploadFiles,
-    updateImage
+    updateImage,
+    showImg,
 }
