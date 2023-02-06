@@ -11,7 +11,7 @@
 ![](https://res.cloudinary.com/dxwsqccy0/image/upload/v1664579506/RestServer/Screenshot_2022-09-30_181124_tjwpo7.png)
 <p align="center">
 <br>
-  <a  href="https://restserver-nodejs-varscrip.herokuapp.com" target="_blank" class="text-decoration-none text-light ">Go to RestServer</a>
+  <a  href="https://project-restserver-nodejs-production.up.railway.app" target="_blank" class="text-decoration-none text-light ">Go to RestServer</a>
  <br><br><br>
 </p>
 For created the rest Server, it was used the next tools:
