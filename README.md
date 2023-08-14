@@ -11,7 +11,7 @@
 ![](https://res.cloudinary.com/dxwsqccy0/image/upload/v1664579506/RestServer/Screenshot_2022-09-30_181124_tjwpo7.png)
 <p align="center">
 <br>
-  <a  href="https://project-restserver-nodejs-production.up.railway.app" target="_blank" class="text-decoration-none text-light ">Go to RestServer</a>
+  <a  href="https://project-restserver-nodejs.vercel.app" target="_blank" class="text-decoration-none text-light ">Go to RestServer</a>
  <br><br><br>
 </p>
 For created the rest Server, it was used the next tools:
@@ -31,20 +31,26 @@ For created the rest Server, it was used the next tools:
    ```sh
    npm install
    ```
+   
+2. Install the dotenv
 
-2. Rename .example.env for .env and environment variables config
+   ```sh
+   npm install dotenv
+   ```
+
+3. Rename .example.env for .env and environment variables config
 
    ```sh
    PORT=8080 ...
    ```
 
-3. Install dependencies if is required
+4. Install dependencies if is required
 
    ```sh
    pakage.json.dependencies
    ```
 
-4. Start the server
+5. Start the server
 
    ```sh
    nodemon app.js
